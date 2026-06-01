@@ -249,62 +249,95 @@
         }
 
         /* --- Projects Section --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-        }
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
 
-        .project-card {
-            background: var(--card-black);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.3s;
-        }
+.project-card {
+    position: relative; /* Crucial: Allows elements inside to align perfectly to the card borders */
+    background: var(--card-black);
+    border-radius: 15px;
+    height: 380px; /* Forces a uniform height just like your mockup */
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes the text elements to sit at the bottom */
+}
 
-        .project-card:hover {
-            border-color: var(--deep-blue);
-            transform: scale(1.02);
-        }
+.project-card:hover {
+    border-color: var(--electric-blue);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
+}
 
-        .project-img-placeholder {
-            height: 200px;
-            background: linear-gradient(135deg, #050b14, #102a45);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: rgba(0, 229, 255, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+/* Background image sizing inside the card frame */
+.project-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the system screenshots don't stretch vertically or horizontally */
+    object-position: top center; /* Focuses nicely on the top elements of your software windows */
+    z-index: 1; /* Sits behind the text layer */
+    transition: transform 0.4s ease;
+}
 
-        .project-info {
-            padding: 2rem;
-        }
+.project-card:hover .project-bg-img {
+    transform: scale(1.05); /* Clean zoom animation on hover */
+}
 
-        .project-info h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.8rem;
-        }
+/* Overlay gradient shield to guarantee all text is 100% readable over bright screenshots */
+.project-overlay-content {
+    position: relative;
+    z-index: 2; /* Forces text to sit safely on top of the image layer */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Keeps text aligned seamlessly to the lower card lip */
+    /* Deep dark gradient background blending into full transparency at the top */
+    background: linear-gradient(to top, 
+                rgba(10, 12, 16, 0.95) 0%, 
+                rgba(10, 12, 16, 0.8) 50%, 
+                rgba(10, 12, 16, 0.2) 100%);
+}
 
-        .project-info p {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
+.project-info-top h3 {
+    font-size: 1.4rem;
+    color: var(--text-white);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle dark drop shadow for maximum crispness */
+}
 
-        .project-links a {
-            color: var(--electric-blue);
-            text-decoration: none;
-            font-weight: 600;
-            margin-right: 1.5rem;
-        }
+.project-info-top p {
+    color: #cbd5e1; /* Clear white-gray mix text color */
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
 
-        .project-links a:hover {
-            text-decoration: underline;
-        }
+.project-links a {
+    color: var(--electric-blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-block;
+    transition: 0.2s ease;
+}
+
+.project-links a:hover {
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
+    text-decoration: underline;
+}
 
         /* --- Contact Section --- */
         .contact-container {
@@ -453,35 +486,37 @@
     </section>
 
     <section id="projects">
-        <h2 class="section-title">Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-img-placeholder">
-                    <img src="website.png" alt="website">
-                </div>
-                <div class="project-info">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+        
+        <div class="project-card">
+            <img src="website.png" alt="YourFit Website" class="project-bg-img">
+            <div class="project-overlay-content">
+                <div class="project-text-box">
                     <h3>YourFit Website</h3>
                     <p>A modern and responsive website for a clothing shop, showcasing products with an engaging user interface.</p>
-                    <div class="project-links">
-                        <a href="file:///C:/Users/SERYN/Downloads/design%20(1).html">View Project</a>
-                    </div>
                 </div>
-            </div>
-            <div class="project-card">
-                <div class="project-img-placeholder">
-                  <img src="system.png" alt="system">
-                </div>
-                <div class="project-info">
-                    <h3>Inventory Management System</h3>
-                    <p>An inventory System built with Java and MySQL for effective management.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/dornaalexiajae-sudo/inventory-system/blob/main/README.md">View Project</a>
-                    </div>
+                <div class="project-links">
+                    <a href="file:///C:/Users/SERYN/Downloads/About.html">View Project</a>
                 </div>
             </div>
         </div>
-    </section>
 
+        <div class="project-card">
+            <img src="system.png" alt="Inventory Management System" class="project-bg-img">
+            <div class="project-overlay-content">
+                <div class="project-text-box">
+                    <h3>Inventory Management System</h3>
+                    <p>An inventory system built with Java and MySQL for effective tracking and data management.</p>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/dornaalexiajae-sudo/inventory-system/blob/main/README.md">View Project</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
     <section id="contact">
         <h2 class="section-title">Contact</h2>
         <div class="contact-container">
