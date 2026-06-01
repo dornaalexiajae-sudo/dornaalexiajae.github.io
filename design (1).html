@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YourFit – Women's Tops</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --burgundy      : #6B2737;
+      --burgundy-dark : #4A1A25;
+      --burgundy-light: #8C3347;
+      --gold          : #B8860B;
+      --gold-light    : #D4A017;
+      --gold-pale     : #F0D88A;
+      --ivory         : #F5ECD7;
+      --ivory-dark    : #EAD9B8;
+      --ivory-deeper  : #D9C49A;
+      --text-dark     : #2A1A1F;
+      --text-mid      : #5A3A42;
+      --text-muted    : #8A6A72;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; overflow-x: hidden; background: #fff; color: var(--text-dark); }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* ── NAVBAR ── */
+    .navbar { background: var(--burgundy-dark) !important; }
+    .navbar-brand { font-family: 'Great Vibes', cursive; font-size: clamp(1.8rem,4vw,2.4rem); color: var(--gold-light) !important; transition: color .2s, transform .2s; display: inline-block; text-shadow: 0 1px 4px rgba(0,0,0,.3); }
+    .navbar-brand:hover { color: var(--gold-pale) !important; transform: scale(1.05); }
+    .navbar-toggler { border-color: var(--gold) !important; }
+    .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23B8860B' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important; }
+    .navbar-nav .nav-link { color: var(--ivory) !important; font-size: clamp(13px,2vw,15px); letter-spacing: .5px; padding-bottom: 4px; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+    .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active-link { color: var(--gold-light) !important; border-bottom-color: var(--gold-light); }
+    .search-container { display: flex; align-items: center; gap: 6px; background: rgba(245,236,215,.12); border: 1px solid rgba(184,134,11,.4); border-radius: 20px; padding: 5px 14px; transition: background .2s, border-color .2s; }
+    .search-container:hover { background: rgba(245,236,215,.2); border-color: var(--gold); }
+    .search-container input { border: none; background: transparent; outline: none; font-size: 14px; color: var(--ivory); width: clamp(80px,15vw,160px); }
+    .search-container input::placeholder { color: rgba(245,236,215,.5); }
+    .search-container i { color: var(--gold) !important; font-size: 13px; }
+    .nav-icons a { color: var(--ivory) !important; display: inline-block; transition: color .2s, transform .2s; cursor: pointer; position: relative; }
+    .nav-icons a:hover { color: var(--gold-light) !important; transform: scale(1.2); }
+
+    /* cart badge */
+    #cartBadge { background: var(--gold) !important; color: var(--burgundy-dark) !important; font-size: 10px; min-width: 18px; height: 18px; display: none; align-items: center; justify-content: center; border-radius: 50%; padding: 0 4px; position: absolute; top: -6px; right: -8px; font-weight: 700; }
+    #cartBadge.show { display: flex; }
+
+    /* ── HERO ── */
+    .hero-section { background: var(--ivory); padding: clamp(2rem,6vw,4rem) 1rem; text-align: center; border-bottom: 1px solid var(--ivory-dark); position: relative; }
+    .hero-section::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(184,134,11,.03) 40px,rgba(184,134,11,.03) 41px); pointer-events: none; }
+    .collection-tag { display: inline-block; background: var(--burgundy-dark); border: 1px solid var(--gold); border-radius: 30px; padding: 8px 22px; font-size: clamp(12px,2vw,14px); color: var(--gold-light); max-width: 100%; letter-spacing: .3px; }
+    .hero-title { font-family: 'Great Vibes', cursive; font-size: clamp(2.6rem,9vw,5rem); color: var(--burgundy); line-height: 1.2; text-shadow: 1px 2px 0 rgba(184,134,11,.15); }
+    .hero-description { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(.9rem,2.5vw,1.1rem); color: var(--text-mid); max-width: 500px; margin: 0 auto; }
+    .ornament-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: .5rem 0; color: var(--gold); font-size: 18px; letter-spacing: 6px; }
+    .ornament-divider::before, .ornament-divider::after { content: ''; flex: 1; max-width: 80px; height: 1px; background: linear-gradient(to right,transparent,var(--gold)); }
+    .ornament-divider::after { background: linear-gradient(to left,transparent,var(--gold)); }
+
+    /* ── CATEGORY NAV ── */
+    .category-nav { background: var(--ivory-dark) !important; border-top: 1px solid var(--ivory-deeper) !important; border-bottom: 1px solid var(--ivory-deeper) !important; }
+    .category-nav .nav-link { color: var(--text-mid) !important; white-space: nowrap; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: .5px; padding-bottom: 4px; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+    .category-nav .nav-link:hover, .category-nav .nav-link.active-cat { color: var(--burgundy) !important; border-bottom-color: var(--gold); }
+    .category-nav .navbar-nav { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+
+    /* ── PRODUCT SECTION HEADER ── */
+    .products-header { text-align: center; padding: 2.5rem 1rem .5rem; background: #fff; }
+    .products-header h3 { font-family: 'Playfair Display', serif; color: var(--burgundy); font-size: clamp(1.2rem,3vw,1.6rem); font-weight: 600; margin-bottom: 4px; }
+    .products-header p { color: var(--text-muted); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ── PRODUCT CARDS ── */
+    .product-card { border: 1px solid var(--ivory-dark) !important; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(107,39,55,.06); transition: transform .3s, box-shadow .3s, border-color .3s; height: 100%; background: #fff; position: relative; }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 14px 36px rgba(107,39,55,.14); border-color: var(--gold) !important; cursor: pointer; }
+    .product-card .card-img-top { width: 100%; height: 240px; object-fit: cover; object-position: top; transition: transform .4s ease; filter: brightness(.97) sepia(.05); }
+    .product-card:hover .card-img-top { transform: scale(1.07); }
+    .card-content { padding: 12px 14px; border-top: 2px solid var(--ivory-dark); }
+    .card-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 5px; color: var(--gold); text-transform: uppercase; }
+    .card-name { font-size: clamp(13px,2vw,15px); font-weight: 700; color: var(--burgundy); margin-bottom: 2px; font-family: 'Playfair Display', serif; }
+    .card-price { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+    .stars-row { list-style: none; padding: 0; margin: 0 0 4px; display: flex; gap: 2px; }
+    .stars-row li { display: inline; }
+    .fa-star { color: #ddd; font-size: 12px; }
+    .checked { color: var(--gold); }
+
+    /* Wish button on card */
+    .wish-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,.92); border: 1.5px solid var(--ivory-dark); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .2s; z-index: 2; font-size: 15px; color: var(--text-muted); }
+    .wish-btn:hover { border-color: var(--burgundy); color: var(--burgundy); transform: scale(1.12); }
+    .wish-btn.wished { color: var(--burgundy); border-color: var(--burgundy); background: #fff0f3; }
+
+    /* Add to cart button */
+    .add-cart-btn { display: block; width: 100%; margin-top: 8px; background: var(--burgundy); color: var(--ivory); border: none; border-radius: 6px; padding: 8px 0; font-size: 12px; font-weight: 700; letter-spacing: .6px; cursor: pointer; transition: background .2s; }
+    .add-cart-btn:hover { background: var(--burgundy-light); }
+
+    /* ── FEATURES ── */
+    .features { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1px; background: var(--ivory-deeper); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); margin: 2rem 0; }
+    .feature-box { display: flex; flex-direction: column; align-items: center; text-align: center; padding: clamp(1.4rem,4vw,2.2rem) 1rem; background: var(--ivory); border: 1px solid transparent; transition: box-shadow .25s, transform .25s, border-color .25s, background .25s; cursor: default; }
+    .feature-box:hover { box-shadow: 0 6px 24px rgba(107,39,55,.12); transform: translateY(-4px); border-color: var(--gold); background: #fff; }
+    .feature-box .icon { width: 54px; height: 54px; border-radius: 50%; background: var(--burgundy); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 2px solid var(--gold); }
+    .feature-box .icon i { font-size: 20px; color: var(--gold-light); }
+    .feature-box h3 { font-size: clamp(13px,2vw,15px); font-weight: 700; margin-bottom: 4px; color: var(--burgundy-dark); }
+    .feature-box p { font-size: clamp(11px,1.5vw,13px); color: var(--text-muted); margin: 0; }
+
+    .payment-section { background: var(--burgundy-dark); padding: clamp(2.5rem,6vw,4.5rem) 1rem; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); position: relative; }
+    .payment-section::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(184,134,11,0.04) 30px,rgba(184,134,11,0.04) 31px); pointer-events: none; }
+    .payment-section .section-label { display: inline-block; background: transparent; border: 1px solid var(--gold); border-radius: 30px; padding: 5px 18px; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase; margin-bottom: 10px; }
+    .payment-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem,4vw,2rem); color: var(--ivory); font-weight: 600; margin-bottom: 6px; }
+    .payment-section .subtitle { font-size: clamp(13px,2vw,15px); color: rgba(245,236,215,0.6); margin-bottom: 2.5rem; font-style: italic; }
+    .payment-card { background: rgba(245,236,215,0.06); border-radius: 16px; border: 1px solid rgba(184,134,11,0.3); padding: clamp(1.4rem,4vw,2.2rem) clamp(1rem,3vw,1.8rem); text-align: center; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; height: 100%; }
+    .payment-card:hover { border-color: var(--gold); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); background: rgba(245,236,215,0.1); }
+    .payment-card.active { border-color: var(--gold); background: rgba(184,134,11,0.1); box-shadow: 0 8px 28px rgba(184,134,11,0.25); }
+    .payment-card.active .payment-check { opacity: 1; transform: scale(1); }
+    .payment-check { position: absolute; top: 12px; right: 14px; width: 26px; height: 26px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.6); transition: all 0.25s ease; }
+    .payment-check i { color: var(--burgundy-dark); font-size: 11px; font-weight: 900; }
+    .payment-logo-wrap { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 28px; transition: transform 0.3s ease; border: 2px solid rgba(184,134,11,0.4); background: rgba(245,236,215,0.08); }
+    .payment-card:hover .payment-logo-wrap { transform: scale(1.12) rotate(-4deg); border-color: var(--gold); }
+    .payment-card h4 { font-size: clamp(14px,2vw,17px); font-weight: 700; color: var(--ivory); margin-bottom: 6px; font-family: 'Playfair Display', serif; }
+    .payment-card p { font-size: clamp(11px,1.5vw,13px); color: rgba(245,236,215,0.6); margin: 0; line-height: 1.6; }
+    .payment-badge { display: inline-block; margin-top: 10px; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.4px; background: rgba(184,134,11,0.2); color: var(--gold-light); border: 1px solid rgba(184,134,11,0.35); }
+    .payment-proceed-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 2.5rem; background: var(--gold); color: var(--burgundy-dark); border: none; border-radius: 30px; padding: 13px 36px; font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; letter-spacing: 0.6px; font-family: 'Playfair Display', serif; }
+    .payment-proceed-btn:hover { background: var(--gold-light); transform: scale(1.04); box-shadow: 0 6px 24px rgba(184,134,11,0.45); }
+
+/*--PAYMENT-MODAL---*/
+    .payment-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(42,26,31,0.75); z-index: 9999; align-items: center; justify-content: center; }
+    .payment-modal-overlay.show { display: flex; }
+    .payment-modal { background: var(--ivory); border: 2px solid var(--gold); border-radius: 16px; padding: 2.2rem 2.4rem; width: min(420px, 92vw); text-align: center; animation: modalIn 0.3s ease; }
+    @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .payment-modal .modal-icon { width: 68px; height: 68px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 28px; border: 2px solid var(--gold); }
+    .payment-modal h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--burgundy-dark); margin-bottom: 8px; }
+    .payment-modal p { font-size: 14px; color: var(--text-mid); margin-bottom: 1.4rem; font-style: italic; }
+    .modal-close-btn { background: var(--burgundy); color: var(--ivory); border: 2px solid var(--gold); border-radius: 30px; padding: 10px 30px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s; font-family: 'Playfair Display', serif; letter-spacing: 0.5px; }
+    .modal-close-btn:hover { background: var(--burgundy-dark); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonial-section { background: var(--ivory); padding: clamp(2rem,6vw,4rem) 1rem; border-top: 1px solid var(--ivory-dark); }
+    .testimonial-card { background: #fff; border-radius: 14px; padding: clamp(1.2rem,4vw,2rem); box-shadow: 0 2px 16px rgba(107,39,55,.07); border: 1px solid var(--ivory-dark); border-top: 3px solid var(--burgundy); transition: transform .25s, box-shadow .25s; }
+    .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(107,39,55,.12); }
+    .testimonial-card .stars i { color: var(--gold); font-size: 14px; }
+    .testimonial-text { font-size: clamp(13px,2vw,15px); color: var(--text-mid); line-height: 1.8; font-style: italic; font-family: 'Playfair Display', serif; }
+    .testimonial-card img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--gold); }
+    .testimonial-card h5 { color: var(--burgundy-dark); font-weight: 700; }
+
+    /* ── SIDE PANELS ── */
+    .side-panel { position: fixed; top: 0; right: -440px; width: min(420px,100vw); height: 100vh; background: #fff; z-index: 10000; display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(42,26,31,.2); transition: right .35s cubic-bezier(.4,0,.2,1); border-left: 2px solid var(--gold); }
+    .side-panel.open { right: 0; }
+    .panel-overlay { display: none; position: fixed; inset: 0; background: rgba(42,26,31,.55); z-index: 9999; }
+    .panel-overlay.show { display: block; }
+    .panel-header { background: var(--burgundy-dark); padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--gold); flex-shrink: 0; }
+    .panel-header h4 { font-family: 'Playfair Display', serif; color: var(--gold-light); margin: 0; font-size: 1.15rem; }
+    .panel-close { background: none; border: none; color: var(--ivory); font-size: 20px; cursor: pointer; padding: 0; line-height: 1; transition: color .2s; }
+    .panel-close:hover { color: var(--gold-light); }
+    .panel-body { flex: 1; overflow-y: auto; padding: 20px; }
+    .panel-footer { padding: 16px 20px; border-top: 2px solid var(--ivory-dark); background: var(--ivory); flex-shrink: 0; }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 50px 20px; }
+    .empty-state i { font-size: 52px; color: var(--ivory-deeper); margin-bottom: 14px; display: block; }
+    .empty-state p { color: var(--text-muted); font-style: italic; font-family: 'Playfair Display', serif; line-height: 1.6; }
+
+    /* ── WISHLIST PANEL items ── */
+    .wish-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--ivory-dark); }
+    .wish-item img { width: 70px; height: 78px; object-fit: cover; border-radius: 8px; border: 1px solid var(--ivory-dark); flex-shrink: 0; }
+    .wish-item-info { flex: 1; min-width: 0; }
+    .wish-item-info h6 { font-family: 'Playfair Display', serif; color: var(--burgundy); font-size: 14px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wish-item-info .wi-price { font-size: 13px; color: var(--gold); font-weight: 700; }
+    .wish-move-cart { background: var(--burgundy); color: var(--ivory); border: none; border-radius: 5px; padding: 5px 12px; font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 7px; display: inline-block; transition: background .2s; }
+    .wish-move-cart:hover { background: var(--burgundy-light); }
+    .wish-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 15px; padding: 4px 6px; transition: color .2s; flex-shrink: 0; }
+    .wish-remove:hover { color: var(--burgundy); }
+
+    /* ── CART PANEL items ── */
+    .cart-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--ivory-dark); }
+    .cart-item img { width: 70px; height: 78px; object-fit: cover; border-radius: 8px; border: 1px solid var(--ivory-dark); flex-shrink: 0; }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-info h6 { font-family: 'Playfair Display', serif; color: var(--burgundy); font-size: 14px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart-item-info .ci-price { font-size: 13px; color: var(--gold); font-weight: 700; }
+    .qty-control { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .qty-btn { background: var(--ivory-dark); border: none; border-radius: 4px; width: 27px; height: 27px; cursor: pointer; font-size: 16px; font-weight: 700; color: var(--burgundy-dark); line-height: 1; transition: background .15s; }
+    .qty-btn:hover { background: var(--ivory-deeper); }
+    .qty-val { font-size: 14px; font-weight: 700; color: var(--text-dark); min-width: 22px; text-align: center; }
+    .cart-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; padding: 4px 6px; transition: color .2s; flex-shrink: 0; }
+    .cart-remove:hover { color: var(--burgundy); }
+
+    /* Cart payment picker */
+    .cart-payment-section { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--ivory-dark); }
+    .cart-payment-section h6 { font-family: 'Playfair Display', serif; color: var(--burgundy-dark); font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+    .pay-opt { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1.5px solid var(--ivory-dark); border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: all .2s; user-select: none; }
+    .pay-opt:hover { border-color: var(--gold); background: var(--ivory); }
+    .pay-opt.selected { border-color: var(--gold); background: #fffbf0; }
+    .pay-opt input[type=radio] { accent-color: var(--gold); width: 16px; height: 16px; cursor: pointer; }
+    .pay-opt-icon { font-size: 22px; }
+    .pay-opt-label { font-size: 14px; font-weight: 700; color: var(--burgundy-dark); }
+    .pay-opt-desc { font-size: 11px; color: var(--text-muted); }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 14px; color: var(--text-mid); }
+    .cart-total-row.grand-total { font-size: 16px; font-weight: 700; color: var(--burgundy-dark); border-top: 1px solid var(--ivory-dark); padding-top: 10px; margin-top: 10px; }
+    .checkout-btn { width: 100%; background: var(--gold); color: var(--burgundy-dark); border: none; border-radius: 30px; padding: 13px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Playfair Display', serif; letter-spacing: .5px; transition: background .2s, transform .15s; margin-top: 14px; }
+    .checkout-btn:hover { background: var(--gold-light); transform: scale(1.02); }
+    .wish-all-btn { width: 100%; background: var(--burgundy); color: var(--ivory); border: none; border-radius: 30px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Playfair Display', serif; transition: background .2s; }
+    .wish-all-btn:hover { background: var(--burgundy-light); }
+
+    /* ── ACCOUNT PANEL ── */
+    .auth-tab-bar { display: flex; border-bottom: 2px solid var(--ivory-dark); margin-bottom: 22px; }
+    .auth-tab { flex: 1; padding: 10px; background: none; border: none; font-size: 14px; font-weight: 700; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color .2s, border-color .2s; letter-spacing: .5px; }
+    .auth-tab.active { color: var(--burgundy); border-bottom-color: var(--gold); }
+    .auth-form { display: none; }
+    .auth-form.show { display: block; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-mid); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; }
+    .form-group input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--ivory-dark); border-radius: 8px; font-size: 14px; color: var(--text-dark); outline: none; transition: border-color .2s; background: #fff; }
+    .form-group input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,134,11,.12); }
+    .form-group input::placeholder { color: var(--text-muted); }
+    .auth-submit-btn { width: 100%; background: var(--burgundy); color: var(--ivory); border: none; border-radius: 8px; padding: 12px; font-size: 15px; font-weight: 700; cursor: pointer; letter-spacing: .5px; transition: background .2s; font-family: 'Playfair Display', serif; margin-top: 6px; }
+    .auth-submit-btn:hover { background: var(--burgundy-light); }
+    .auth-divider { text-align: center; color: var(--text-muted); font-size: 12px; margin: 14px 0; }
+    .social-btn { width: 100%; background: var(--ivory); color: var(--burgundy-dark); border: 2px solid var(--ivory-dark); border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 700; cursor: pointer; transition: border-color .2s, background .2s; font-family: 'Lato', sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .social-btn:hover { border-color: var(--gold); background: #fffbf0; }
+    .auth-note { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 10px; }
+    .auth-note a { color: var(--gold); text-decoration: none; }
+    .auth-note a:hover { text-decoration: underline; }
+    .auth-error { background: #ffeaea; border: 1px solid #f5c6cb; color: #842029; border-radius: 6px; padding: 9px 12px; font-size: 13px; margin-bottom: 14px; display: none; }
+    .auth-error.show { display: block; }
+
+    /* Profile (logged-in) */
+    .profile-section { display: none; }
+    .profile-section.show { display: block; }
+    .profile-avatar-wrap { text-align: center; margin-bottom: 14px; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--burgundy); display: inline-flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: var(--gold-light); border: 3px solid var(--gold); font-family: 'Playfair Display', serif; }
+    .profile-name { text-align: center; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--burgundy-dark); font-weight: 600; margin-bottom: 3px; }
+    .profile-email { text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+    .profile-stat-row { display: flex; gap: 10px; margin-bottom: 20px; }
+    .profile-stat { flex: 1; background: var(--ivory); border: 1px solid var(--ivory-dark); border-radius: 10px; padding: 12px; text-align: center; }
+    .profile-stat .stat-num { font-size: 22px; font-weight: 700; color: var(--burgundy); font-family: 'Playfair Display', serif; }
+    .profile-stat .stat-lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+    .profile-menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; cursor: pointer; transition: background .15s; margin-bottom: 4px; }
+    .profile-menu-item:hover { background: var(--ivory); }
+    .profile-menu-item .pmi-icon { width: 20px; color: var(--burgundy); font-size: 15px; text-align: center; }
+    .profile-menu-item span { font-size: 14px; color: var(--text-dark); font-weight: 600; flex: 1; }
+    .profile-menu-item .pmi-arrow { color: var(--text-muted); font-size: 11px; }
+    .logout-btn { width: 100%; background: none; border: 2px solid var(--burgundy); color: var(--burgundy); border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 14px; transition: background .2s, color .2s; font-family: 'Playfair Display', serif; letter-spacing: .5px; }
+    .logout-btn:hover { background: var(--burgundy); color: var(--ivory); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--burgundy-dark); border-top: 3px solid var(--gold); color: rgba(245,236,215,.7); }
+    .footer-top { padding: clamp(2.5rem,6vw,4rem) 1rem 1.5rem; }
+    .footer-brand { font-family: 'Great Vibes', cursive; font-size: clamp(2rem,5vw,2.8rem); color: var(--gold-light); text-shadow: 0 1px 4px rgba(0,0,0,.3); margin-bottom: 10px; display: block; }
+    .footer-tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 13px; color: rgba(245,236,215,.55); margin-bottom: 14px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 10px; }
+    .footer-social a { width: 38px; height: 38px; border-radius: 50%; background: rgba(245,236,215,.08); border: 1px solid rgba(184,134,11,.35); display: flex; align-items: center; justify-content: center; color: rgba(245,236,215,.7); font-size: 15px; text-decoration: none; transition: all .2s; }
+    .footer-social a:hover { background: var(--gold); color: var(--burgundy-dark); border-color: var(--gold); transform: translateY(-3px); }
+    .footer-heading { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(184,134,11,.3); }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 9px; }
+    .footer-links a { color: rgba(245,236,215,.6); text-decoration: none; font-size: 13.5px; transition: color .2s; display: inline-flex; align-items: center; gap: 6px; }
+    .footer-links a i { font-size: 10px; opacity: .6; }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+    .footer-contact-item i { color: var(--gold); font-size: 14px; margin-top: 2px; width: 16px; flex-shrink: 0; }
+    .footer-contact-item span { font-size: 13px; color: rgba(245,236,215,.65); line-height: 1.5; }
+    .footer-newsletter p { font-size: 13px; color: rgba(245,236,215,.6); margin-bottom: 10px; }
+    .newsletter-form { display: flex; border-radius: 30px; overflow: hidden; border: 1px solid rgba(184,134,11,.4); }
+    .newsletter-form input { flex: 1; background: rgba(245,236,215,.08); border: none; padding: 10px 16px; font-size: 13px; color: var(--ivory); outline: none; }
+    .newsletter-form input::placeholder { color: rgba(245,236,215,.4); }
+    .newsletter-form button { background: var(--gold); color: var(--burgundy-dark); border: none; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background .2s; }
+    .newsletter-form button:hover { background: var(--gold-light); }
+    .footer-divider { border-color: rgba(184,134,11,.2); margin: 0; }
+    .footer-bottom { padding: 1.2rem 1rem; text-align: center; font-size: 12.5px; color: rgba(245,236,215,.4); }
+    .footer-bottom span { color: var(--gold-light); }
+    .footer-legal { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 6px; }
+    .footer-legal a { color: rgba(245,236,215,.45); text-decoration: none; font-size: 12px; transition: color .2s; }
+    .footer-legal a:hover { color: var(--gold-light); }
+    .pay-logos { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    .pay-logo-chip { background: rgba(245,236,215,.1); border: 1px solid rgba(184,134,11,.25); border-radius: 6px; padding: 5px 12px; font-size: 12px; color: rgba(245,236,215,.6); font-weight: 700; }
+
+    /* ── TOAST ── */
+    .toast-notif { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--burgundy-dark); color: var(--ivory); border: 1px solid var(--gold); border-radius: 30px; padding: 10px 24px; font-size: 14px; z-index: 20000; transition: transform .3s ease; white-space: nowrap; pointer-events: none; }
+    .toast-notif.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 576px) {
+      .nav-icons { gap: 14px !important; }
+      .search-container input { width: 70px; }
+      .product-card .card-img-top { height: 185px; }
+      .side-panel { width: 100vw; right: -100vw; }
+    }
+    @media (min-width: 992px) { .product-card .card-img-top { height: 280px; } }
+  </style>
+</head>
+<body>
+
+<!-- ── PANEL BACKDROP ── -->
+<div class="panel-overlay" id="panelOverlay" onclick="closeAllPanels()"></div>
+
+<!-- ══════════════ WISHLIST PANEL ══════════════ -->
+<div class="side-panel" id="wishlistPanel">
+  <div class="panel-header">
+    <h4><i class="far fa-heart me-2"></i>My Wishlist</h4>
+    <button class="panel-close" onclick="closePanel('wishlistPanel')" aria-label="Close"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="panel-body">
+    <div class="empty-state" id="wishEmpty">
+      <i class="far fa-heart"></i>
+      <p>Your wishlist is empty.<br>Tap the ♡ on any item to save it!</p>
+    </div>
+    <div id="wishItems"></div>
+  </div>
+  <div class="panel-footer" id="wishFooter" style="display:none;">
+    <button class="wish-all-btn" onclick="moveAllToCart()">
+      <i class="fas fa-shopping-bag me-2"></i>Move All to Cart
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ CART PANEL ══════════════ -->
+<div class="side-panel" id="cartPanel">
+  <div class="panel-header">
+    <h4><i class="fas fa-shopping-bag me-2"></i>My Cart</h4>
+    <button class="panel-close" onclick="closePanel('cartPanel')" aria-label="Close"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="panel-body" id="cartBody">
+    <div class="empty-state" id="cartEmpty">
+      <i class="fas fa-shopping-bag"></i>
+      <p>Your cart is empty.<br>Add something gorgeous!</p>
+    </div>
+    <div id="cartItems"></div>
+
+    <div class="cart-payment-section" id="cartPaySection" style="display:none;">
+      <h6><i class="fas fa-lock me-2" style="color:var(--gold);"></i>Select Payment Method</h6>
+      <label class="pay-opt" id="po-paymaya" onclick="pickPayment('paymaya')">
+        <input type="radio" name="cartpay" value="paymaya">
+        <span class="pay-opt-icon">💚</span>
+        <div><div class="pay-opt-label">PayMaya</div><div class="pay-opt-desc">Instant digital wallet</div></div>
+      </label>
+      <label class="pay-opt" id="po-gcash" onclick="pickPayment('gcash')">
+        <input type="radio" name="cartpay" value="gcash">
+        <span class="pay-opt-icon">💙</span>
+        <div><div class="pay-opt-label">GCash</div><div class="pay-opt-desc">Most popular e-wallet</div></div>
+      </label>
+      <label class="pay-opt" id="po-cod" onclick="pickPayment('cod')">
+        <input type="radio" name="cartpay" value="cod">
+        <span class="pay-opt-icon">💛</span>
+        <div><div class="pay-opt-label">Cash on Delivery</div><div class="pay-opt-desc">Pay when your order arrives</div></div>
+      </label>
+    </div>
+  </div>
+  <div class="panel-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">Php 0</span></div>
+    <div class="cart-total-row"><span>Shipping</span><span id="cartShipping">Php 60</span></div>
+    <div class="cart-total-row grand-total"><span>Total</span><span id="cartTotal">Php 0</span></div>
+    <button class="checkout-btn" onclick="doCheckout()">
+      <i class="fas fa-lock me-2" style="font-size:12px;"></i>Checkout Securely
+    </button>
+  </div>
+</div>
+
+
+
+<!-- ══════════════ ACCOUNT PANEL ══════════════ -->
+<div class="side-panel" id="accountPanel">
+  <div class="panel-header">
+    <h4><i class="far fa-user me-2"></i>My Account</h4>
+    <button class="panel-close" onclick="closePanel('accountPanel')" aria-label="Close"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="panel-body">
+
+    <!-- Auth section -->
+    <div id="authSection">
+      <div class="auth-tab-bar">
+        <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+        <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Register</button>
+      </div>
+
+      <!-- Login -->
+      <div class="auth-form show" id="formLogin">
+        <div class="auth-error" id="loginError"></div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button class="auth-submit-btn" onclick="doLogin()">
+          <i class="fas fa-sign-in-alt me-2"></i>Sign In
+        </button>
+        <div class="auth-divider">— or —</div>
+        <button class="social-btn" onclick="socialLogin('Google')">
+          <i class="fab fa-google" style="color:#DB4437;"></i> Continue with Google
+        </button>
+        <p class="auth-note" style="margin-top:14px;">
+          <a href="#" onclick="return false;">Forgot password?</a>
+        </p>
+      </div>
+
+      <!-- Register -->
+      <div class="auth-form" id="formRegister">
+        <div class="auth-error" id="regError"></div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="regName" placeholder="Your full name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="regEmail" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Password <small style="color:var(--text-muted);font-weight:400;">(min. 8 chars)</small></label>
+          <input type="password" id="regPass" placeholder="••••••••" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="regConfirm" placeholder="Re-enter password" autocomplete="new-password">
+        </div>
+        <button class="auth-submit-btn" onclick="doRegister()">
+          <i class="fas fa-user-plus me-2"></i>Create Account
+        </button>
+        <p class="auth-note">By registering you agree to our <a href="#">Terms &amp; Conditions</a></p>
+      </div>
+    </div>
+
+    <!-- Profile (logged in) -->
+    <div class="profile-section" id="profileSection">
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" id="profileAvatar">JD</div>
+      </div>
+      <div class="profile-name" id="profileName">Jane Doe</div>
+      <div class="profile-email" id="profileEmail">jane@email.com</div>
+      <div class="profile-stat-row">
+        <div class="profile-stat">
+          <div class="stat-num" id="statOrders">0</div>
+          <div class="stat-lbl">Orders</div>
+        </div>
+        <div class="profile-stat">
+          <div class="stat-num" id="statWishlist">0</div>
+          <div class="stat-lbl">Wishlist</div>
+        </div>
+        <div class="profile-stat">
+          <div class="stat-num">VIP</div>
+          <div class="stat-lbl">Status</div>
+        </div>
+      </div>
+      <div class="profile-menu-item">
+        <span class="pmi-icon"><i class="fas fa-box"></i></span>
+        <span>My Orders</span>
+        <i class="fas fa-chevron-right pmi-arrow"></i>
+      </div>
+      <div class="profile-menu-item">
+        <span class="pmi-icon"><i class="fas fa-map-marker-alt"></i></span>
+        <span>Saved Addresses</span>
+        <i class="fas fa-chevron-right pmi-arrow"></i>
+      </div>
+      <div class="profile-menu-item" onclick="closePanel('accountPanel');openPanel('wishlistPanel')">
+        <span class="pmi-icon"><i class="fas fa-heart"></i></span>
+        <span>My Wishlist</span>
+        <i class="fas fa-chevron-right pmi-arrow"></i>
+      </div>
+      <div class="profile-menu-item">
+        <span class="pmi-icon"><i class="fas fa-cog"></i></span>
+        <span>Account Settings</span>
+        <i class="fas fa-chevron-right pmi-arrow"></i>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">
+        <i class="fas fa-sign-out-alt me-2"></i>Log Out
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast-notif" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="home.html">YourFit</a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active-link" href="home.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonial">Reviews</a></li>
+        <li class="nav-item"><a class="nav-link" href="#footer-contact">Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#best">Best-Seller</a></li>
+        <li class="nav-item"><a class="nav-link" href="#payment-method">Payment</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-3 nav-icons mt-2 mt-lg-0">
+        <div class="search-container">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search..." id="searchInput" oninput="handleSearch()">
+        </div>
+        <!-- Wishlist icon -->
+        <a onclick="openPanel('wishlistPanel')" title="Wishlist" aria-label="Open wishlist">
+          <i class="far fa-heart" id="navHeart"></i>
+        </a>
+        <!-- Account icon -->
+        <a onclick="openPanel('accountPanel')" title="Account" aria-label="Open account">
+          <i class="far fa-user" id="navUser"></i>
+        </a>
+        <!-- Cart icon with badge -->
+        <a onclick="openPanel('cartPanel')" title="Cart" aria-label="Open cart" style="position:relative;">
+          <i class="fas fa-shopping-bag"></i>
+          <span id="cartBadge">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero-section">
+  <div class="container" id="best">
+    <p class="collection-tag">✦ Unlock 15% off your first order when you join our VIP style list!</p>
+    <br>
+    <h1 class="hero-title">Embrace Your Style</h1>
+    <div class="ornament-divider">✦</div>
+    <p class="hero-description">Discover timeless pieces that blend elegance with modern sophistication</p>
+  </div>
+</section>
+
+<!-- ── CATEGORY NAV ── -->
+<nav class="navbar category-nav py-2">
+  <div class="container">
+    <ul class="navbar-nav flex-row gap-2">
+      <li class="nav-item"><a class="nav-link active-link" href="home.html">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="allitems.html">All Items</a></li>
+      <li class="nav-item"><a class="nav-link" href="dress.html">Dress</a></li>
+      <li class="nav-item"><a class="nav-link" href="tops.html">Tops</a></li>
+      <li class="nav-item"><a class="nav-link" href="swimwear.html">Swimwear</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── PRODUCT HEADER ── -->
+<div class="products-header">
+  <h3>Best-Seller</h3>
+  <p>Curated with care · Timeless by design</p>
+  <div class="ornament-divider" style="max-width:300px;margin:.5rem auto 0;">✦</div>
+</div>
+
+<!-- ══════════════ PRODUCT GRID ══════════════ -->
+<section class="py-4" style="background:#fff;" id="shopSection">
+  <div class="container">
+    <div class="row g-3" id="productGrid">
+      <!-- Card 1 — Cardigan -->
+      <div class="col-6 col-md-4 col-lg-3 product-col" data-name="cardigan">
+        <div class="product-card card h-100">
+          <button class="wish-btn" data-id="1" onclick="toggleWish(this)" title="Save to Wishlist" aria-label="Add to wishlist">
+            <i class="far fa-heart"></i>
+          </button>
+          <img src="tops/cardigan.jpg" class="card-img-top" alt="Cardigan">
+          <div class="card-content">
+            <p class="card-label">New Arrival</p>
+            <p class="card-name">Cardigan</p>
+            <p class="card-price">Php 155</p>
+            <ul class="stars-row">
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+            </ul>
+            <button class="add-cart-btn" onclick="addToCart(1,'Cardigan',155,'tops/cardigan.jpg')">
+              <i class="fas fa-plus me-1"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 — Premium Corset Top -->
+      <div class="col-6 col-md-4 col-lg-3 product-col" data-name="premium corset top">
+        <div class="product-card card h-100">
+          <button class="wish-btn" data-id="2" onclick="toggleWish(this)" title="Save to Wishlist" aria-label="Add to wishlist">
+            <i class="far fa-heart"></i>
+          </button>
+          <img src="tops/polo.jpg" class="card-img-top" alt="Premium Corset Top">
+          <div class="card-content">
+            <p class="card-label">Best-Seller</p>
+            <p class="card-name">Premium Corset Top</p>
+            <p class="card-price">Php 250</p>
+            <ul class="stars-row">
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star"></i></li>
+            </ul>
+            <button class="add-cart-btn" onclick="addToCart(2,'Premium Corset Top',250,'tops/polo.jpg')">
+              <i class="fas fa-plus me-1"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 — Ribbon Peplum Top -->
+      <div class="col-6 col-md-4 col-lg-3 product-col" data-name="ribbon peplum top">
+        <div class="product-card card h-100">
+          <button class="wish-btn" data-id="3" onclick="toggleWish(this)" title="Save to Wishlist" aria-label="Add to wishlist">
+            <i class="far fa-heart"></i>
+          </button>
+          <img src="tops/TOP1.jpg" class="card-img-top" alt="Ribbon Peplum Top">
+          <div class="card-content">
+            <p class="card-label">Trending</p>
+            <p class="card-name">Ribbon Peplum Top</p>
+            <p class="card-price">Php 150</p>
+            <ul class="stars-row">
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+            </ul>
+            <button class="add-cart-btn" onclick="addToCart(3,'Ribbon Peplum Top',150,'tops/TOP1.jpg')">
+              <i class="fas fa-plus me-1"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 — Corset Tops -->
+      <div class="col-6 col-md-4 col-lg-3 product-col" data-name="corset tops">
+        <div class="product-card card h-100">
+          <button class="wish-btn" data-id="4" onclick="toggleWish(this)" title="Save to Wishlist" aria-label="Add to wishlist">
+            <i class="far fa-heart"></i>
+          </button>
+          <img src="tops/TOPS.jpg" class="card-img-top" alt="Corset Tops">
+          <div class="card-content">
+            <p class="card-label">Restock Alert</p>
+            <p class="card-name">Corset Tops</p>
+            <p class="card-price">Php 695</p>
+            <ul class="stars-row">
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+            </ul>
+            <button class="add-cart-btn" onclick="addToCart(4,'Corset Tops',695,'tops/TOPS.jpg')">
+              <i class="fas fa-plus me-1"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.row -->
+
+    <!-- No results message -->
+    <div id="noResults" style="display:none;text-align:center;padding:40px 20px;">
+      <i class="fas fa-search" style="font-size:40px;color:var(--ivory-deeper);margin-bottom:12px;display:block;"></i>
+      <p style="color:var(--text-muted);font-style:italic;font-family:'Playfair Display',serif;">No products matched your search.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="features">
+  <div class="feature-box"><div class="icon"><i class="fa-solid fa-truck"></i></div><h3>Free Shipping</h3><p>On orders over Php 1,000</p></div>
+  <div class="feature-box"><div class="icon"><i class="fa-solid fa-shield-halved"></i></div><h3>Secure Payment</h3><p>100% protected transactions</p></div>
+  <div class="feature-box"><div class="icon"><i class="fa-solid fa-rotate"></i></div><h3>Easy Returns</h3><p>30-day return policy</p></div>
+  <div class="feature-box"><div class="icon"><i class="fa-solid fa-headset"></i></div><h3>24/7 Support</h3><p>Dedicated customer service</p></div>
+</section>
+
+<!-- PAYMENT SECTION -->
+<section class="payment-section" id="payment-method">
+  <div class="container" style="position:relative; z-index:1;">
+    <div class="text-center mb-4">
+      <span class="section-label">✦ Checkout ✦</span>
+      <h2>Choose Payment Method</h2>
+      <p class="subtitle">Safe, trusted, and convenient — pay the way you prefer</p>
+    </div>
+    <div class="row g-3 justify-content-center">
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="payment-card" id="card-paymaya" onclick="selectPayment('paymaya')">
+          <div class="payment-check" id="check-paymaya"><i class="fa-solid fa-check"></i></div>
+          <div class="payment-logo-wrap">💚</div>
+          <h4>PayMaya</h4>
+          <p>Pay securely with your PayMaya wallet or linked card. Instant transfer, no hassle.</p>
+          <span class="payment-badge">Instant Transfer</span>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="payment-card" id="card-gcash" onclick="selectPayment('gcash')">
+          <div class="payment-check" id="check-gcash"><i class="fa-solid fa-check"></i></div>
+          <div class="payment-logo-wrap">💙</div>
+          <h4>GCash</h4>
+          <p>Send payment directly from your GCash account. Quick, easy, and widely accepted.</p>
+          <span class="payment-badge">Most Popular</span>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="payment-card" id="card-cod" onclick="selectPayment('cod')">
+          <div class="payment-check" id="check-cod"><i class="fa-solid fa-check"></i></div>
+          <div class="payment-logo-wrap">💛</div>
+          <h4>Cash on Delivery</h4>
+          <p>Pay when your order arrives at your door. No digital wallet needed — always reliable.</p>
+          <span class="payment-badge">Pay on Arrival</span>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Payment Confirmation Modal -->
+<div class="payment-modal-overlay" id="paymentModal">
+  <div class="payment-modal">
+    <div class="modal-icon" id="modalIcon"></div>
+    <h3 id="modalTitle">Payment Selected!</h3>
+    <p id="modalMessage">Your payment method has been confirmed.</p>
+    <button class="modal-close-btn" onclick="closeModal()">Confirm &amp; Continue</button>
+  </div>
+</div>
+
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonial-section">
+  <div class="container" id="testimonial">
+    <div class="text-center mb-5">
+      <h2 style="font-family:'Playfair Display',serif;color:var(--burgundy);font-weight:600;">Customer Feedback</h2>
+      <div class="ornament-divider" style="max-width:300px;margin:.5rem auto;">✦</div>
+      <p style="color:var(--text-muted);font-style:italic;">Trusted by fashion lovers everywhere</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="testimonial-card h-100">
+          <div class="stars mb-3"><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i></div>
+          <p class="testimonial-text">"YourFit has become my go-to for timeless pieces. The quality is exceptional and the customer service is outstanding!"</p>
+          <div class="d-flex align-items-center mt-4">
+            <img src="all/genite.jpg" alt="JM Jenite">
+            <div class="ms-3"><h5 class="mb-0" style="font-size:15px;">JM Jenite</h5><small style="color:var(--gold);">Verified Buyer</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="testimonial-card h-100">
+          <div class="stars mb-3"><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i></div>
+          <p class="testimonial-text">"Finally found a brand that understands modern elegance. Every piece feels carefully curated and beautifully made."</p>
+          <div class="d-flex align-items-center mt-4">
+            <img src="all/jesryl.jpg" alt="Jesryl Comeling">
+            <div class="ms-3"><h5 class="mb-0" style="font-size:15px;">Jesryl Comeling</h5><small style="color:var(--gold);">Consistent Buyer</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="testimonial-card h-100">
+          <div class="stars mb-3"><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i></div>
+          <p class="testimonial-text">"The attention to detail is remarkable. I love how each collection tells a story while remaining versatile and wearable."</p>
+          <div class="d-flex align-items-center mt-4">
+            <img src="all/dorna.jpg" alt="Alexia Jae Dorna">
+            <div class="ms-3"><h5 class="mb-0" style="font-size:15px;">Alexia Jae Dorna</h5><small style="color:var(--gold);">Consistent Buyer</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="footer-contact">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-12 col-lg-4">
+          <span class="footer-brand">YourFit</span>
+          <p class="footer-tagline">Timeless pieces for the modern soul.</p>
+          <p style="font-size:13px;color:rgba(245,236,215,.55);line-height:1.7;">Curating fashion that blends elegance with everyday wearability — because style should feel effortless.</p>
+          <div class="footer-social">
+
+            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" title="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            <a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
+          </div>
+          <div class="pay-logos">
+            <span class="pay-logo-chip">💚 Maya</span>
+            <span class="pay-logo-chip">💙 GCash</span>
+            <span class="pay-logo-chip">💛 COD</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h5 class="footer-heading">Shop</h5>
+          <ul class="footer-links">
+            <li><a href="allitems.html"><i class="fas fa-chevron-right"></i>All Items</a></li>
+            <li><a href="dress.html"><i class="fas fa-chevron-right"></i>Dresses</a></li>
+            <li><a href="tops.html"><i class="fas fa-chevron-right"></i>Tops</a></li>
+            <li><a href="swimwear.html"><i class="fas fa-chevron-right"></i>Swimwear</a></li>
+            <li><a href="#best"><i class="fas fa-chevron-right"></i>Best Sellers</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>New Arrivals</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h5 class="footer-heading">Help</h5>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Size Guide</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Shipping Info</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Returns</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Track Order</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>FAQ</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Care Guide</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <h5 class="footer-heading">Contact Us</h5>
+          <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>M. Roxas St., Brgy Gredu, Panabo, Philippines, 8105</span></div>
+          <div class="footer-contact-item"><i class="fas fa-phone"></i><span>09556471659</span></div>
+          <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>YourFit@gmail.com</span></div>
+          <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon – Sat: 9:00 AM – 6:00 PM PHT</span></div>
+          <div class="footer-newsletter mt-3">
+            <p>Subscribe for exclusive deals:</p>
+            <div class="newsletter-form">
+              <input type="email" id="nlEmail" placeholder="Enter your email">
+              <button onclick="subscribeNewsletter()">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2025 <span>YourFit</span>. All rights reserved. Made with <span>♥</span> in the Philippines.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
