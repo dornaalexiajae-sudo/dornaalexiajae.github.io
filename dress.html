@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YourFit – Women's Tops</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+ 
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+
+<!-- ── PANEL BACKDROP ── -->
+
+<!-- ══════════════ WISHLIST PANEL ══════════════ -->
+<div class="side-panel" id="wishlistPanel">
+  <div class="panel-header">
+    <h4><i class="far fa-heart me-2"></i>My Wishlist</h4>
+    <button class="panel-close" onclick="closePanel('wishlistPanel')" aria-label="Close"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="panel-body">
+    <div class="empty-state" id="wishEmpty">
+      <i class="far fa-heart"></i>
+      <p>Your wishlist is empty.<br>Tap the ♡ on any item to save it!</p>
+    </div>
+    <div id="wishItems"></div>
+  </div>
+  <div class="panel-footer" id="wishFooter" style="display:none;">
+    <button class="wish-all-btn" onclick="moveAllToCart()">
+      <i class="fas fa-shopping-bag me-2"></i>Move All to Cart
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ CART PANEL ══════════════ -->
+<div class="side-panel" id="cartPanel">
+  <div class="panel-header">
+    <h4><i class="fas fa-shopping-bag me-2"></i>My Cart</h4>
+    <button class="panel-close" onclick="closePanel('cartPanel')" aria-label="Close"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="panel-body" id="cartBody">
+    <div class="empty-state" id="cartEmpty">
+      <i class="fas fa-shopping-bag"></i>
+      <p>Your cart is empty.<br>Add something gorgeous!</p>
+    </div>
+    <div id="cartItems"></div>
+
+    <div class="cart-payment-section" id="cartPaySection" style="display:none;">
+      <h6><i class="fas fa-lock me-2" style="color:var(--gold);"></i>Select Payment Method</h6>
+      <label class="pay-opt" id="po-paymaya" onclick="pickPayment('paymaya')">
+        <input type="radio" name="cartpay" value="paymaya">
+        <span class="pay-opt-icon">💚</span>
+        <div><div class="pay-opt-label">PayMaya</div><div class="pay-opt-desc">Instant digital wallet</div></div>
+      </label>
+      <label class="pay-opt" id="po-gcash" onclick="pickPayment('gcash')">
+        <input type="radio" name="cartpay" value="gcash">
+        <span class="pay-opt-icon">💙</span>
+        <div><div class="pay-opt-label">GCash</div><div class="pay-opt-desc">Most popular e-wallet</div></div>
+      </label>
+      <label class="pay-opt" id="po-cod" onclick="pickPayment('cod')">
+        <input type="radio" name="cartpay" value="cod">
+        <span class="pay-opt-icon">💛</span>
+        <div><div class="pay-opt-label">Cash on Delivery</div><div class="pay-opt-desc">Pay when your order arrives</div></div>
+      </label>
+    </div>
+  </div>
+  <div class="panel-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">Php 0</span></div>
+    <div class="cart-total-row"><span>Shipping</span><span id="cartShipping">Php 60</span></div>
+    <div class="cart-total-row grand-total"><span>Total</span><span id="cartTotal">Php 0</span></div>
+    <button class="checkout-btn" onclick="doCheckout()">
+      <i class="fas fa-lock me-2" style="font-size:12px;"></i>Checkout Securely
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ ACCOUNT PANEL ══════════════ -->
+<div class="side-panel" id="accountPanel">
+  <div class="panel-header">
+    <h4><i class="far fa-user me-2"></i>My Account</h4>
+    <button class="panel-close" onclick="closePanel('accountPanel')" aria-label="Close"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="panel-body">
+
+    <!-- Auth section -->
+    <div id="authSection">
+      <div class="auth-tab-bar">
+        <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+        <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Register</button>
+      </div>
+
+      <!-- Login -->
+      <div class="auth-form show" id="formLogin">
+        <div class="auth-error" id="loginError"></div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button class="auth-submit-btn" onclick="doLogin()">
+          <i class="fas fa-sign-in-alt me-2"></i>Sign In
+        </button>
+        <div class="auth-divider">— or —</div>
+        <button class="social-btn" onclick="socialLogin('Google')">
+          <i class="fab fa-google" style="color:#DB4437;"></i> Continue with Google
+        </button>
+        <p class="auth-note" style="margin-top:14px;">
+          <a href="#" onclick="return false;">Forgot password?</a>
+        </p>
+      </div>
+
+      <!-- Register -->
+      <div class="auth-form" id="formRegister">
+        <div class="auth-error" id="regError"></div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="regName" placeholder="Your full name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="regEmail" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Password <small style="color:var(--text-muted);font-weight:400;">(min. 8 chars)</small></label>
+          <input type="password" id="regPass" placeholder="••••••••" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="regConfirm" placeholder="Re-enter password" autocomplete="new-password">
+        </div>
+        <button class="auth-submit-btn" onclick="doRegister()">
+          <i class="fas fa-user-plus me-2"></i>Create Account
+        </button>
+        <p class="auth-note">By registering you agree to our <a href="#">Terms &amp; Conditions</a></p>
+      </div>
+    </div>
+
+    <!-- Profile (logged in) -->
+    <div class="profile-section" id="profileSection">
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" id="profileAvatar">JD</div>
+      </div>
+      <div class="profile-name" id="profileName">Jane Doe</div>
+      <div class="profile-email" id="profileEmail">jane@email.com</div>
+      <div class="profile-stat-row">
+        <div class="profile-stat">
+          <div class="stat-num" id="statOrders">0</div>
+          <div class="stat-lbl">Orders</div>
+        </div>
+        <div class="profile-stat">
+          <div class="stat-num" id="statWishlist">0</div>
+          <div class="stat-lbl">Wishlist</div>
+        </div>
+        <div class="profile-stat">
+          <div class="stat-num">VIP</div>
+          <div class="stat-lbl">Status</div>
+        </div>
+      </div>
+      <div class="profile-menu-item">
+        <span class="pmi-icon"><i class="fas fa-box"></i></span>
+        <span>My Orders</span>
+        <i class="fas fa-chevron-right pmi-arrow"></i>
+      </div>
+      <div class="profile-menu-item">
+        <span class="pmi-icon"><i class="fas fa-map-marker-alt"></i></span>
+        <span>Saved Addresses</span>
+        <i class="fas fa-chevron-right pmi-arrow"></i>
+      </div>
+      <div class="profile-menu-item" onclick="closePanel('accountPanel');openPanel('wishlistPanel')">
+        <span class="pmi-icon"><i class="fas fa-heart"></i></span>
+        <span>My Wishlist</span>
+        <i class="fas fa-chevron-right pmi-arrow"></i>
+      </div>
+      <div class="profile-menu-item">
+        <span class="pmi-icon"><i class="fas fa-cog"></i></span>
+        <span>Account Settings</span>
+        <i class="fas fa-chevron-right pmi-arrow"></i>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">
+        <i class="fas fa-sign-out-alt me-2"></i>Log Out
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast-notif" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="home.html">YourFit</a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonial">Reviews</a></li>
+        <li class="nav-item"><a class="nav-link" href="#footer-contact">Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#best">Best-Seller</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-3 nav-icons mt-2 mt-lg-0">
+        <div class="search-container">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search..." id="searchInput" oninput="handleSearch()">
+        </div>
+        <!-- Wishlist icon -->
+        <a onclick="openPanel('wishlistPanel')" title="Wishlist" aria-label="Open wishlist">
+          <i class="far fa-heart" id="navHeart"></i>
+        </a>
+        <!-- Account icon -->
+        <a onclick="openPanel('accountPanel')" title="Account" aria-label="Open account">
+          <i class="far fa-user" id="navUser"></i>
+        </a>
+        <!-- Cart icon with badge -->
+        <a onclick="openPanel('cartPanel')" title="Cart" aria-label="Open cart" style="position:relative;">
+          <i class="fas fa-shopping-bag"></i>
+          <span id="cartBadge">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero-section">
+  <div class="container" id="best">
+    <p class="collection-tag">✦ Unlock 15% off your first order when you join our VIP style list!</p>
+    <br>
+    <h1 class="hero-title">Casual Dress</h1>
+    <div class="ornament-divider">✦</div>
+    <p class="hero-description">Discover timeless pieces that blend elegance with modern sophistication</p>
+  </div>
+</section>
+
+<!-- ── CATEGORY NAV ── -->
+<nav class="navbar category-nav py-2">
+  <div class="container">
+    <ul class="navbar-nav flex-row gap-2">
+      <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="allitems.html">All Items</a></li>
+      <li class="nav-item"><a class="nav-link active-link" href="dress.html">Dress</a></li>
+      <li class="nav-item"><a class="nav-link" href="tops.html">Tops</a></li>
+      <li class="nav-item"><a class="nav-link" href="swimwear.html">Swimwear</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<!-- ══════════════ PRODUCT GRID ══════════════ -->
+<section class="py-4" style="background:#fff;" id="shopSection">
+  <div class="container">
+    <div class="row g-3" id="productGrid">
+
+      <!-- Card 1 — Cardigan -->
+      <div class="col-6 col-md-4 col-lg-3 product-col" data-name="cardigan">
+        <div class="product-card card h-100">
+          <button class="wish-btn" data-id="1" onclick="toggleWish(this)" title="Save to Wishlist" aria-label="Add to wishlist">
+            <i class="far fa-heart"></i>
+          </button>
+          <img src="dress/vietnam.jpg" class="card-img-top" alt="Cardigan">
+          <div class="card-content">
+            <p class="card-label">New Arrival</p>
+            <p class="card-name">Vietnam Dress</p>
+            <p class="card-price">Php 155</p>
+            <ul class="stars-row">
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+            </ul>
+            <button class="add-cart-btn" onclick="addToCart(1,'Cardigan',155,'tops/cardigan.jpg')">
+              <i class="fas fa-plus me-1"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 — Premium Corset Top -->
+      <div class="col-6 col-md-4 col-lg-3 product-col" data-name="premium corset top">
+        <div class="product-card card h-100">
+          <button class="wish-btn" data-id="2" onclick="toggleWish(this)" title="Save to Wishlist" aria-label="Add to wishlist">
+            <i class="far fa-heart"></i>
+          </button>
+          <img src="dress/rose.jpg" class="card-img-top" alt="Premium Corset Top">
+          <div class="card-content">
+            <p class="card-label">Best-Seller</p>
+            <p class="card-name">Stunning Rose Coords</p>
+            <p class="card-price">Php 250</p>
+            <ul class="stars-row">
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star"></i></li>
+            </ul>
+            <button class="add-cart-btn" onclick="addToCart(2,'Premium Corset Top',250,'tops/polo.jpg')">
+              <i class="fas fa-plus me-1"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3 product-col" data-name="premium corset top">
+        <div class="product-card card h-100">
+          <button class="wish-btn" data-id="2" onclick="toggleWish(this)" title="Save to Wishlist" aria-label="Add to wishlist">
+            <i class="far fa-heart"></i>
+          </button>
+          <img src="dress/dress.jpg" class="card-img-top" alt="Premium Corset Top">
+          <div class="card-content">
+            <p class="card-label">Best-Seller</p>
+            <p class="card-name">Chiffon Halter Mini Dress</p>
+            <p class="card-price">Php 250</p>
+            <ul class="stars-row">
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star"></i></li>
+            </ul>
+            <button class="add-cart-btn" onclick="addToCart(2,'Premium Corset Top',250,'tops/polo.jpg')">
+              <i class="fas fa-plus me-1"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Card 3 — Ribbon Peplum Top -->
+      <div class="col-6 col-md-4 col-lg-3 product-col" data-name="ribbon peplum top">
+        <div class="product-card card h-100">
+          <button class="wish-btn" data-id="3" onclick="toggleWish(this)" title="Save to Wishlist" aria-label="Add to wishlist">
+            <i class="far fa-heart"></i>
+          </button>
+          <img src="dress/MINI DRESS.jpg" class="card-img-top" alt="Ribbon Peplum Top">
+          <div class="card-content">
+            <p class="card-label">Trending</p>
+            <p class="card-name">Mini Vietnam Dress</p>
+            <p class="card-price">Php 150</p>
+            <ul class="stars-row">
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+            </ul>
+            <button class="add-cart-btn" onclick="addToCart(3,'Ribbon Peplum Top',150,'tops/TOP1.jpg')">
+              <i class="fas fa-plus me-1"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 — Corset Tops -->
+      <div class="col-6 col-md-4 col-lg-3 product-col" data-name="corset tops">
+        <div class="product-card card h-100">
+          <button class="wish-btn" data-id="4" onclick="toggleWish(this)" title="Save to Wishlist" aria-label="Add to wishlist">
+            <i class="far fa-heart"></i>
+          </button>
+          <img src="dress/jacket.jpg" class="card-img-top" alt="Corset Tops">
+          <div class="card-content">
+            <p class="card-label">Restock Alert</p>
+            <p class="card-name">Fur Long Coat</p>
+            <p class="card-price">Php 695</p>
+            <ul class="stars-row">
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star checked"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+            </ul>
+            <button class="add-cart-btn" onclick="addToCart(4,'Corset Tops',695,'tops/TOPS.jpg')">
+              <i class="fas fa-plus me-1"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.row -->
+
+    <!-- No results message -->
+    <div id="noResults" style="display:none;text-align:center;padding:40px 20px;">
+      <i class="fas fa-search" style="font-size:40px;color:var(--ivory-deeper);margin-bottom:12px;display:block;"></i>
+      <p style="color:var(--text-muted);font-style:italic;font-family:'Playfair Display',serif;">No products matched your search.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="features">
+  <div class="feature-box"><div class="icon"><i class="fa-solid fa-truck"></i></div><h3>Free Shipping</h3><p>On orders over Php 1,000</p></div>
+  <div class="feature-box"><div class="icon"><i class="fa-solid fa-shield-halved"></i></div><h3>Secure Payment</h3><p>100% protected transactions</p></div>
+  <div class="feature-box"><div class="icon"><i class="fa-solid fa-rotate"></i></div><h3>Easy Returns</h3><p>30-day return policy</p></div>
+  <div class="feature-box"><div class="icon"><i class="fa-solid fa-headset"></i></div><h3>24/7 Support</h3><p>Dedicated customer service</p></div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonial-section">
+  <div class="container" id="testimonial">
+    <div class="text-center mb-5">
+      <h2 style="font-family:'Playfair Display',serif;color:var(--burgundy);font-weight:600;">Customer Feedback</h2>
+      <div class="ornament-divider" style="max-width:300px;margin:.5rem auto;">✦</div>
+      <p style="color:var(--text-muted);font-style:italic;">Trusted by fashion lovers everywhere</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="testimonial-card h-100">
+          <div class="stars mb-3"><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i></div>
+          <p class="testimonial-text">"YourFit has become my go-to for timeless pieces. The quality is exceptional and the customer service is outstanding!"</p>
+          <div class="d-flex align-items-center mt-4">
+            <img src="all/genite.jpg" alt="JM Jenite">
+            <div class="ms-3"><h5 class="mb-0" style="font-size:15px;">JM Jenite</h5><small style="color:var(--gold);">Verified Buyer</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="testimonial-card h-100">
+          <div class="stars mb-3"><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i></div>
+          <p class="testimonial-text">"Finally found a brand that understands modern elegance. Every piece feels carefully curated and beautifully made."</p>
+          <div class="d-flex align-items-center mt-4">
+            <img src="all/jesryl.jpg" alt="Jesryl Comeling">
+            <div class="ms-3"><h5 class="mb-0" style="font-size:15px;">Jesryl Comeling</h5><small style="color:var(--gold);">Consistent Buyer</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="testimonial-card h-100">
+          <div class="stars mb-3"><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i></div>
+          <p class="testimonial-text">"The attention to detail is remarkable. I love how each collection tells a story while remaining versatile and wearable."</p>
+          <div class="d-flex align-items-center mt-4">
+            <img src="all/dorna.jpg" alt="Alexia Jae Dorna">
+            <div class="ms-3"><h5 class="mb-0" style="font-size:15px;">Alexia Jae Dorna</h5><small style="color:var(--gold);">Consistent Buyer</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="footer-contact">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-12 col-lg-4">
+          <span class="footer-brand">YourFit</span>
+          <p class="footer-tagline">Timeless pieces for the modern soul.</p>
+          <p style="font-size:13px;color:rgba(245,236,215,.55);line-height:1.7;">Curating fashion that blends elegance with everyday wearability — because style should feel effortless.</p>
+          <div class="footer-social">
+            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+       
+          </div>
+          <div class="pay-logos">
+            <span class="pay-logo-chip">💚 Maya</span>
+            <span class="pay-logo-chip">💙 GCash</span>
+            <span class="pay-logo-chip">💛 COD</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h5 class="footer-heading">Shop</h5>
+          <ul class="footer-links">
+            <li><a href="allitems.html"><i class="fas fa-chevron-right"></i>All Items</a></li>
+            <li><a href="dress.html"><i class="fas fa-chevron-right"></i>Dresses</a></li>
+            <li><a href="tops.html"><i class="fas fa-chevron-right"></i>Tops</a></li>
+            <li><a href="swimwear.html"><i class="fas fa-chevron-right"></i>Swimwear</a></li>
+            <li><a href="#best"><i class="fas fa-chevron-right"></i>Best Sellers</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>New Arrivals</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h5 class="footer-heading">Help</h5>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Size Guide</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Shipping Info</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Returns</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Track Order</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>FAQ</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i>Care Guide</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <h5 class="footer-heading">Contact Us</h5>
+          <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>
+            M. Roxas St., Brgy Gredu, Panabo, Philippines, 8105</span></div>
+          <div class="footer-contact-item"><i class="fas fa-phone"></i><span>09556471659</span></div>
+          <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>YourFit@gmail.com</span></div>
+          <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon – Sat: 9:00 AM – 6:00 PM PHT</span></div>
+          <div class="footer-newsletter mt-3">
+            <p>Subscribe for exclusive deals:</p>
+            <div class="newsletter-form">
+              <input type="email" id="nlEmail" placeholder="Enter your email">
+              <button onclick="subscribeNewsletter()">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2025 <span>YourFit</span>. All rights reserved. Made with <span>♥</span> in the Philippines.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
